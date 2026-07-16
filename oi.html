@@ -87,7 +87,7 @@
 
         /* 气泡框与按钮的深度区分 */
         
-        /* 1. “你好”聊天气泡（经典的微信/社交软件气泡样式） */
+        /* 1. “你好”聊天气泡 */
         .chat-bubble {
             background-color: #2f2f38;
             color: #ffffff;
@@ -102,7 +102,7 @@
             white-space: nowrap;
         }
 
-        /* 2. “发送”按钮（高亮、极具点击欲的拟物渐变按钮） */
+        /* 2. “发送”按钮 */
         .send-btn {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: white;
@@ -148,7 +148,9 @@
         <button class="send-btn" id="sendBtn">发送</button>
     </div>
 
-const sendBtn = document.getElementById('sendBtn');
+    <!-- 💡 修正点：在这里补全了 <script> 标签 -->
+    <script>
+        const sendBtn = document.getElementById('sendBtn');
         const wrap = document.getElementById('interactiveWrap');
         const textContainer = document.getElementById('textContainer');
         const mainTitle = document.getElementById('mainTitle');
@@ -158,9 +160,9 @@ const sendBtn = document.getElementById('sendBtn');
         let isFirstClick = true;
         let audio = null;
 
-        // 更换为更稳定、加载极快的激昂背景音乐直链（可以直接在浏览器播放）
+        // 💡 建议：如果上传到 GitHub 部署后音乐放不出来，把音乐文件名改成简单的 xiaopingguo.mp3 即可
         const audioSrc = "筷子兄弟&凤凰传奇 - 最炫小苹果.mp3";
-
+        
         // 预加载音频对象
         try {
             audio = new Audio(audioSrc);
@@ -220,3 +222,6 @@ const sendBtn = document.getElementById('sendBtn');
             // 4. 随机跳跃
             teleport();
         });
+    </script>
+</body>
+</html>
