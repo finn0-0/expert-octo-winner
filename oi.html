@@ -148,8 +148,7 @@
         <button class="send-btn" id="sendBtn">发送</button>
     </div>
 
-    <script>
-        const sendBtn = document.getElementById('sendBtn');
+const sendBtn = document.getElementById('sendBtn');
         const wrap = document.getElementById('interactiveWrap');
         const textContainer = document.getElementById('textContainer');
         const mainTitle = document.getElementById('mainTitle');
@@ -159,8 +158,17 @@
         let isFirstClick = true;
         let audio = null;
 
-        // 这里使用的是网易云音乐的公共音频，可以换成你的《禁报》直链
-        const audioSrc = "https://music.163.com/song/media/outer/url?id=1430417435.mp3"; 
+        // 更换为更稳定、加载极快的激昂背景音乐直链（可以直接在浏览器播放）
+        const audioSrc = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
+
+        // 预加载音频对象
+        try {
+            audio = new Audio(audioSrc);
+            audio.loop = true;
+            audio.volume = 0.8; // 音量控制
+        } catch (e) {
+            console.log("音频初始化失败:", e);
+        }
 
         // 随机跳跃函数
         function teleport() {
@@ -170,7 +178,7 @@
 
             const wrapRect = wrap.getBoundingClientRect();
             
-            // 计算安全活动范围，保证完全不会飞到屏幕外面
+            // 计算安全活动范围
             const maxX = window.innerWidth - wrapRect.width - 20;
             const maxY = window.innerHeight - wrapRect.height - 20;
             
@@ -185,32 +193,30 @@
         sendBtn.addEventListener('click', (e) => {
             e.stopPropagation();
 
-            // 1. 改变背景：由阴暗的深色变成极具史诗感和冲击力的金色与玫瑰红渐变流光
+            // 1. 改变背景流光
             if (!body.classList.contains('epic-active')) {
                 body.classList.add('epic-active');
             }
 
-            // 2. 第一次点击时的激昂蜕变效果
+            // 2. 尝试播放音乐（每次点击都尝试触发，防止首次加载太慢被浏览器拦截）
+            if (audio) {
+                audio.play().then(() => {
+                    console.log("音乐播放成功！");
+                }).catch(err => {
+                    console.log("播放被浏览器拦截或正在加载中，等待下一次点击重试...", err);
+                });
+            }
+
+            // 3. 第一次点击时的视觉膨胀效果
             if (isFirstClick) {
                 isFirstClick = false;
                 
-                // 顶部文字变大、变红、带上炽热发光效果
                 textContainer.classList.add('text-epic');
                 mainTitle.style.color = '#ffbd39';
                 subTitle.style.color = '#ffffff';
                 subTitle.style.fontWeight = 'bold';
-
-                // 播放音乐
-                audio = new Audio(audioSrc);
-                audio.loop = true;
-                audio.play().catch(err => {
-                    console.log("音频播放受阻:", err);
-                });
             }
 
-            // 3. 聊天气泡和发送按钮整体在屏幕中随机疯狂跳跃
+            // 4. 随机跳跃
             teleport();
         });
-    </script>
-</body>
-</html>
